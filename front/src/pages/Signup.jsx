@@ -27,8 +27,13 @@ function Signup() {
     setSubmitting(true);
 
     try {
-      await signup(form);
-      navigate('/dashboard');
+      const createdUser = await signup(form);
+      if (createdUser.role === 'freelancer') {
+        // Go to profile completion first
+        navigate('/freelancer/setup');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       console.error(err);
       setError('Failed to sign up. Please check your details.');

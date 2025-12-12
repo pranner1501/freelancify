@@ -145,28 +145,14 @@ function Messages() {
       const sent = await sendMessage(
         activeThreadId,
         {
-          from: 'me',
+          from: user.id.toString(),
           text: messageText,
         },
         token
       );
 
       // Optimistic: ensure it's shown even before socket event
-      setActiveThread((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          messages: [
-            ...prev.messages,
-            {
-              id: sent.id,
-              from: sent.from,
-              text: sent.text,
-              createdAt: sent.createdAt,
-            },
-          ],
-        };
-      });
+      
     } catch (err) {
       console.error(err);
       setError('Failed to send message.');
@@ -274,11 +260,11 @@ function Messages() {
                   <div
                     key={m.id}
                     className={
-                      'message-bubble ' +
-                      (m.from === 'me' ? 'message-bubble-me' : 'message-bubble-them')
+                      'message-bubble ' + (m.from === user.id.toString() ? 'message-bubble-me' : 'message-bubble-them')
                     }
                   >
                     <p className="message-text">{m.text}</p>
+                    <span className="message-time">{m.time}</span>
                   </div>
                 ))}
               </div>

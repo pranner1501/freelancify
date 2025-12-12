@@ -8,7 +8,7 @@ const MessageSchema = new mongoose.Schema(
       ref: 'MessageThread',
       required: true,
     },
-    from: { type: String, enum: ['me', 'them'], required: true },
+    from: { type: String, required: true },
     text: { type: String, required: true },
   },
   { timestamps: true }

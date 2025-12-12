@@ -14,13 +14,22 @@ const JobSchema = new mongoose.Schema(
     type: { type: String, default: 'Hourly' },
     budgetDisplay: { type: String },
 
-    // NEW: actual client user
+    // NEW: link to client user
     client: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    // fallback display name
     clientName: { type: String, default: 'Demo Client' },
+
+    // NEW: job lifecycle status
+    status: {
+      type: String,
+      enum: ['open', 'in_progress', 'completed', 'closed'],
+      default: 'open',
+    },
+
+    // NEW: optional deadline to compute "time remaining"
+    deadline: { type: Date },
   },
   { timestamps: true }
 );

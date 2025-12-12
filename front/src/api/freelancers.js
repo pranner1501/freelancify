@@ -16,3 +16,8 @@ export function inviteFreelancer(freelancerId, jobId, token) {
     token
   );
 }
+
+// NEW: create/update current freelancer's profile
+export function upsertMyFreelancerProfile(payload, token) {
+  return apiPost('/freelancers/me', payload, token);
+}

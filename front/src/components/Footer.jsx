@@ -19,7 +19,7 @@ function Footer() {
           <div>
             <h4>For Clients</h4>
             <Link to="/jobs" className="footer-link">
-              Post a Job (coming)
+              Post a Job
             </Link>
             <Link to="/freelancers" className="footer-link">
               Browse Freelancers

@@ -9,7 +9,7 @@ function Navbar() {
 
   function handleLogout() {
     logout();
-    navigate('/');
+    navigate('/login');
   }
 
   return (
@@ -21,7 +21,7 @@ function Navbar() {
         </Link>
 
         <nav className="navbar-links">
-          <NavLink
+          {/* <NavLink
             to="/"
             end
             className={({ isActive }) =>
@@ -29,14 +29,14 @@ function Navbar() {
             }
           >
             Home
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/jobs"
             className={({ isActive }) =>
               'nav-link' + (isActive ? ' nav-link-active' : '')
             }
           >
-            Find Jobs
+            Projects
           </NavLink>
           <NavLink
             to="/freelancers"

@@ -78,7 +78,7 @@ router.post('/threads/:id/messages', async (req, res) => {
 
     const msg = await Message.create({
       thread: thread._id,
-      from: from || 'me',
+      from: from,
       text,
     });
 

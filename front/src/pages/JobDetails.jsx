@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 
 function JobDetails() {
   const { jobId } = useParams();
-  const { token } = useAuth();
+  const { user, token } = useAuth();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -122,15 +122,18 @@ function JobDetails() {
             <p className="sidebar-client-location">{job.client?.location}</p>
           </div>
 
-          <div className="sidebar-card">
-            <h3>Next steps</h3>
-            <Link
-              to={`/jobs/${job.id}/apply`}
-              className="btn btn-primary btn-full"
-            >
-              Apply to this job
-            </Link>
-          </div>
+          {job?.client?.id !== user?.id && (
+            <div className="sidebar-card">
+              <h3>Next Steps</h3>
+              <Link
+                to={`/jobs/${job.id}/apply`}
+                className="btn btn-primary btn-full"
+              >
+                Apply to this job
+              </Link>
+            </div>
+          )}
+
 
           <div className="sidebar-backlink">
             <Link to="/jobs" className="btn btn-ghost btn-full">

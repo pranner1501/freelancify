@@ -10,7 +10,10 @@ import jobsRouter from './routes/jobs.js';
 import messagesRouter from './routes/messages.js';
 import authRouter from './routes/auth.js';
 import freelancersRouter from './routes/freelancers.js';
-import { authRequired } from './middleware/authRequired.js';
+import proposalsRouter from './routes/proposals.js';
+
+import debugRouter from './routes/debug.js';
+
 import { Message } from './models/Message.js';
 import { MessageThread } from './models/MessageThread.js';
 
@@ -37,10 +40,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.use('/api/debug', debugRouter);
+
 app.use('/api/auth', authRouter);
 
 app.use('/api/jobs', jobsRouter);
 app.use('/api/messages', messagesRouter);
+app.use('/api/proposals', proposalsRouter);
 app.use('/api/freelancers', freelancersRouter);
 
 // Socket.io events
