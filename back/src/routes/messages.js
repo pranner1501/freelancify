@@ -2,34 +2,42 @@
 import express from 'express';
 import { MessageThread } from '../models/MessageThread.js';
 import { Message } from '../models/Message.js';
+import { authRequired } from '../middleware/authRequired.js';
 
 const router = express.Router();
 
 // GET /api/messages/threads
-router.get('/threads', async (req, res) => {
+router.get('/threads', authRequired, async (req, res) => {
   try {
-    const threads = await MessageThread.find().sort({ updatedAt: -1 }).lean();
+    const userId = req.user.id || req.user.sub;
 
-    const result = await Promise.all(
-      threads.map(async (thread) => {
-        const lastMessage = await Message.findOne({ thread: thread._id })
-          .sort({ createdAt: -1 })
-          .lean();
+    if (!userId) {
+      console.error('No user id on request:', req.user);
+      return res.status(401).json({ message: 'Invalid auth token' });
+    }
+    const userIdStr = userId.toString();
+    console.log('[messages] fetching threads for user:', userIdStr);
 
-        return {
-          id: thread._id.toString(),
-          participantName: thread.participantName,
-          participantRole: thread.participantRole,
-          jobTitle: thread.jobTitle,
-          lastActive: thread.lastActive,
-          lastMessageText: lastMessage ? lastMessage.text : '',
-        };
-      })
+    const threads = await MessageThread.find({
+      participants: userIdStr,
+    })
+      .sort({ lastActive: -1 })
+      .lean();
+
+    console.log('[messages] threads found:', threads.length);
+
+    res.json(
+      threads.map((t) => ({
+        id: t._id.toString(),
+        participantName: t.participantName,
+        participantRole: t.participantRole,
+        jobTitle: t.jobTitle,
+        jobId: t.job?.toString(),
+        lastActive: t.lastActive,
+      }))
     );
-
-    res.json(result);
   } catch (err) {
-    console.error(err);
+    console.error('GET /api/messages/threads ERROR:', err);
     res.status(500).json({ message: 'Failed to fetch threads' });
   }
 });
