@@ -131,13 +131,13 @@ router.post('/:id/award', authRequired, async (req, res) => {
 
       await Message.create({
         thread: thread._id,
-        from: 'me',
+        from: req.user.id,
         text: `Hi ${proposal.freelancer.fullName || proposal.freelancerName}, your proposal has been accepted for the project "${project.title}". Let's discuss next steps.`,
       });
     } else {
       await Message.create({
         thread: thread._id,
-        from: 'me',
+        from: req.user.id,
         text: `The client has awarded the project "${project.title}".`,
       });
       thread.lastActive = new Date();
@@ -191,7 +191,7 @@ router.post('/:id/start-thread', authRequired, async (req, res) => {
 
       await Message.create({
         thread: thread._id,
-        from: 'me',
+        from: req.user.id,
         text: `Hi ${freelancerUser.fullName || proposal.freelancerName}, let's discuss the proposal for "${project.title}".`,
       });
     }
