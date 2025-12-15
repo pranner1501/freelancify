@@ -1,16 +1,16 @@
-// src/pages/ApplyToJob.jsx
+// src/pages/ApplyToProject.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getJobDetails, applyToJob } from '../api/jobs.js';
+import { getProjectDetails, applyToProject } from '../api/projects.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
-function ApplyToJob() {
-  const { jobId } = useParams();
+function ApplyToProject() {
+  const { projectId } = useParams();
   const navigate = useNavigate();
   const { token, user } = useAuth();
 
-  const [job, setJob] = useState(null);
-  const [loadingJob, setLoadingJob] = useState(true);
+  const [project, setProject] = useState(null);
+  const [loadingProject, setLoadingProject] = useState(true);
   const [form, setForm] = useState({
     coverLetter: '',
     rateType: 'hourly',
@@ -21,19 +21,19 @@ function ApplyToJob() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function loadJob() {
+    async function loadProject() {
       try {
-        const data = await getJobDetails(jobId, token);
-        setJob(data);
+        const data = await getProjectDetails(projectId, token);
+        setProject(data);
       } catch (err) {
         console.error(err);
       } finally {
-        setLoadingJob(false);
+        setLoadingProject(false);
       }
     }
 
-    loadJob();
-  }, [jobId, token]);
+    loadProject();
+  }, [projectId, token]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -50,7 +50,7 @@ function ApplyToJob() {
         ...form,
         rateAmount: Number(form.rateAmount),
       };
-      await applyToJob(jobId, payload, token);
+      await applyToProject(projectId, payload, token);
       navigate('/dashboard');
     } catch (err) {
       console.error(err);
@@ -63,7 +63,7 @@ function ApplyToJob() {
   if (!user) {
     return (
       <section className="page">
-        <h1>Apply to job</h1>
+        <h1>Apply to project</h1>
         <p>You must be logged in to apply.</p>
         <Link to="/login" className="btn btn-primary">
           Log in
@@ -72,21 +72,21 @@ function ApplyToJob() {
     );
   }
 
-  if (loadingJob) {
+  if (loadingProject) {
     return (
       <section className="page">
-        <p>Loading job...</p>
+        <p>Loading project...</p>
       </section>
     );
   }
 
-  if (!job) {
+  if (!project) {
     return (
       <section className="page">
-        <h1>Job not found</h1>
-        <p>We couldn&apos;t find this job. It may have been removed.</p>
-        <Link to="/jobs" className="btn btn-primary">
-          Back to jobs
+        <h1>Project not found</h1>
+        <p>We couldn&apos;t find this project. It may have been removed.</p>
+        <Link to="/projects" className="btn btn-primary">
+          Back to projects
         </Link>
       </section>
     );
@@ -97,9 +97,9 @@ function ApplyToJob() {
       <div className="form-layout">
         <div className="form-main">
           <header className="page-header">
-            <h1>Apply to: {job.title}</h1>
+            <h1>Apply to: {project.title}</h1>
             <p>
-              {job.type} · {job.level} · {job.budget}
+              {project.type} · {project.level} · {project.budget}
             </p>
           </header>
 
@@ -112,7 +112,7 @@ function ApplyToJob() {
                 required
                 value={form.coverLetter}
                 onChange={handleChange}
-                placeholder="Explain why you are a great fit for this job..."
+                placeholder="Explain why you are a great fit for this project..."
               />
             </label>
 
@@ -174,18 +174,18 @@ function ApplyToJob() {
 
         <aside className="form-sidebar">
           <div className="sidebar-card">
-            <h3>Job summary</h3>
-            <p className="sidebar-client-name">{job.title}</p>
+            <h3>Project summary</h3>
+            <p className="sidebar-client-name">{project.title}</p>
             <p className="sidebar-client-location">
-              {job.type} · {job.level}
+              {project.type} · {project.level}
             </p>
             <p className="sidebar-row">
               <span>Budget</span>
-              <span>{job.budget}</span>
+              <span>{project.budget}</span>
             </p>
             <p className="sidebar-row">
               <span>Project type</span>
-              <span>{job.projectType}</span>
+              <span>{project.projectType}</span>
             </p>
           </div>
         </aside>
@@ -194,4 +194,4 @@ function ApplyToJob() {
   );
 }
 
-export default ApplyToJob;
+export default ApplyToProject;

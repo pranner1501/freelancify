@@ -9,10 +9,10 @@ export function getFreelancer(freelancerId, token) {
   return apiGet(`/freelancers/${freelancerId}`, token);
 }
 
-export function inviteFreelancer(freelancerId, jobId, token) {
+export function inviteFreelancer(freelancerId, projectId, token) {
   return apiPost(
     `/freelancers/${freelancerId}/invite`,
-    { jobId },
+    { projectId },
     token
   );
 }

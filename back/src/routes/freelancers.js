@@ -1,7 +1,7 @@
 // server/src/routes/freelancers.js
 import express from 'express';
 import { authRequired } from '../middleware/authRequired.js';
-import { Job } from '../models/Job.js';
+import { Project } from '../models/Project.js';
 import { MessageThread } from '../models/MessageThread.js';
 import { Message } from '../models/Message.js';
 import { Freelancer } from '../models/Freelancer.js';
@@ -38,10 +38,10 @@ function mapFreelancerProfile(doc) {
     overview: doc.overview,
     skills: doc.skills || [],
     stats: {
-      jobsCompleted: stats.jobsCompleted || 0,
+      projectsCompleted: stats.projectsCompleted || 0,
       hoursWorked: stats.hoursWorked || 0,
       // Frontend expects "98%" style
-      jobSuccess: (stats.jobSuccess ?? 0) + '%',
+      projectSuccess: (stats.projectSuccess ?? 0) + '%',
       memberSince: stats.memberSince || '',
     },
     experiences: doc.experiences || [],
@@ -76,7 +76,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/freelancers/:id/invite - invite freelancer to a job
+// POST /api/freelancers/:id/invite - invite freelancer to a project
 router.post('/:id/invite', authRequired, async (req, res) => {
   try {
     const freelancer = await Freelancer.findById(req.params.id)
@@ -91,19 +91,19 @@ router.post('/:id/invite', authRequired, async (req, res) => {
       return res.status(403).json({ message: 'Only clients can invite freelancers' });
     }
 
-    const { jobId } = req.body;
-    if (!jobId) {
-      return res.status(400).json({ message: 'Missing jobId' });
+    const { projectId } = req.body;
+    if (!projectId) {
+      return res.status(400).json({ message: 'Missing projectId' });
     }
 
-    const job = await Job.findById(jobId).lean();
-    if (!job) {
-      return res.status(404).json({ message: 'Job not found' });
+    const project = await Project.findById(projectId).lean();
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
     }
 
-    // Look for existing thread between this client and this freelancer for this job
+    // Look for existing thread between this client and this freelancer for this project
     let thread = await MessageThread.findOne({
-      job: job._id,
+      project: project._id,
       participants: { $all: [req.user.id, freelancer.user._id.toString()] },
     });
 
@@ -112,8 +112,8 @@ router.post('/:id/invite', authRequired, async (req, res) => {
         participants: [req.user.id, freelancer.user._id],
         participantName: freelancer.user.fullName,
         participantRole: 'Freelancer',
-        jobTitle: job.title,
-        job: job._id,
+        projectTitle: project.title,
+        project: project._id,
         lastActive: new Date(),
       });
 
@@ -121,7 +121,7 @@ router.post('/:id/invite', authRequired, async (req, res) => {
       await Message.create({
         thread: thread._id,
         from: 'me',
-        text: `Hi ${freelancer.user.fullName}, I'd like to invite you to the job "${job.title}".`,
+        text: `Hi ${freelancer.user.fullName}, I'd like to invite you to the project "${project.title}".`,
       });
     }
 

@@ -14,9 +14,9 @@ function FreelancerProfileSetup() {
     hourlyRate: '',
     location: '',
     skills: '',
-    jobsCompleted: '',
+    projectsCompleted: '',
     hoursWorked: '',
-    jobSuccess: '',
+    projectSuccess: '',
     memberSince: '',
     exp1Role: '',
     exp1Company: '',
@@ -97,9 +97,9 @@ function FreelancerProfileSetup() {
         location: form.location,
         skills: skillsArray,
         stats: {
-          jobsCompleted: Number(form.jobsCompleted) || 0,
+          projectsCompleted: Number(form.projectsCompleted) || 0,
           hoursWorked: Number(form.hoursWorked) || 0,
-          jobSuccess: Number(form.jobSuccess) || 0,
+          projectSuccess: Number(form.projectSuccess) || 0,
           memberSince: form.memberSince || '',
         },
         experiences,
@@ -200,12 +200,12 @@ function FreelancerProfileSetup() {
 
             <div className="form-row">
               <label className="form-field">
-                <span>Jobs completed</span>
+                <span>Projects completed</span>
                 <input
                   type="number"
-                  name="jobsCompleted"
+                  name="projectsCompleted"
                   min="0"
-                  value={form.jobsCompleted}
+                  value={form.projectsCompleted}
                   onChange={handleChange}
                   placeholder="e.g. 10"
                 />
@@ -226,13 +226,13 @@ function FreelancerProfileSetup() {
 
             <div className="form-row">
               <label className="form-field">
-                <span>Job success (%)</span>
+                <span>Project success (%)</span>
                 <input
                   type="number"
-                  name="jobSuccess"
+                  name="projectSuccess"
                   min="0"
                   max="100"
-                  value={form.jobSuccess}
+                  value={form.projectSuccess}
                   onChange={handleChange}
                   placeholder="e.g. 95"
                 />

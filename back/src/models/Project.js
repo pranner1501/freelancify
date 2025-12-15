@@ -1,7 +1,7 @@
-// server/src/models/Job.js
+// server/src/models/Project.js
 import mongoose from 'mongoose';
 
-const JobSchema = new mongoose.Schema(
+const ProjectSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -21,7 +21,7 @@ const JobSchema = new mongoose.Schema(
     },
     clientName: { type: String, default: 'Demo Client' },
 
-    // NEW: job lifecycle status
+    // NEW: project lifecycle status
     status: {
       type: String,
       enum: ['open', 'in_progress', 'completed', 'closed'],
@@ -34,4 +34,4 @@ const JobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Job = mongoose.model('Job', JobSchema);
+export const Project = mongoose.model('Project', ProjectSchema);

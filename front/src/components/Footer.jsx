@@ -18,8 +18,8 @@ function Footer() {
         <div className="footer-links">
           <div>
             <h4>For Clients</h4>
-            <Link to="/jobs" className="footer-link">
-              Post a Job
+            <Link to="/projects" className="footer-link">
+              Post a Project
             </Link>
             <Link to="/freelancers" className="footer-link">
               Browse Freelancers
@@ -27,8 +27,8 @@ function Footer() {
           </div>
           <div>
             <h4>For Freelancers</h4>
-            <Link to="/jobs" className="footer-link">
-              Browse Jobs
+            <Link to="/projects" className="footer-link">
+              Browse Projects
             </Link>
             <Link to="/signup" className="footer-link">
               Create Account

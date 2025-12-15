@@ -34,19 +34,19 @@ function Dashboard() {
           <p>Role: {user.role}</p>
         </div>
         <div className="dashboard-card">
-          <h2>Jobs</h2>
+          <h2>Projects</h2>
           {user.role === 'client' ? (
             <>
-              <p>Post a new job to get started.</p>
-              <Link to="/jobs/new" className="btn btn-ghost-sm">
-                Post a job
+              <p>Post a new project to get started.</p>
+              <Link to="/projects/new" className="btn btn-ghost-sm">
+                Post a project
               </Link>
             </>
           ) : (
             <>
-              <p>Browse jobs that match your skills.</p>
-              <Link to="/jobs" className="btn btn-ghost-sm">
-                Browse jobs
+              <p>Browse projects that match your skills.</p>
+              <Link to="/projects" className="btn btn-ghost-sm">
+                Browse projects
               </Link>
             </>
           )}

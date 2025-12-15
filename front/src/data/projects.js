@@ -1,5 +1,5 @@
-// src/data/jobs.js
-export const jobs = [
+// src/data/projects.js
+export const projects = [
   {
     id: '1',
     title: 'React frontend dev for dashboard',
@@ -22,7 +22,7 @@ export const jobs = [
       location: 'Remote · Worldwide',
       memberSince: '2021',
       totalSpent: '$40k+',
-      jobsPosted: 27,
+      projectsPosted: 27,
     },
   },
   {
@@ -47,7 +47,7 @@ export const jobs = [
       location: 'Berlin, Germany',
       memberSince: '2019',
       totalSpent: '$120k+',
-      jobsPosted: 55,
+      projectsPosted: 55,
     },
   },
   {
@@ -71,11 +71,11 @@ export const jobs = [
       location: 'London, UK',
       memberSince: '2020',
       totalSpent: '$15k+',
-      jobsPosted: 12,
+      projectsPosted: 12,
     },
   },
 ];
 
-export function getJobById(id) {
-  return jobs.find((job) => job.id === id);
+export function getProjectById(id) {
+  return projects.find((project) => project.id === id);
 }

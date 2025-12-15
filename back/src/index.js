@@ -6,7 +6,7 @@ import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 
 import { connectDB } from './config/db.js';
-import jobsRouter from './routes/jobs.js';
+import projectsRouter from './routes/projects.js';
 import messagesRouter from './routes/messages.js';
 import authRouter from './routes/auth.js';
 import freelancersRouter from './routes/freelancers.js';
@@ -44,7 +44,7 @@ app.use('/api/debug', debugRouter);
 
 app.use('/api/auth', authRouter);
 
-app.use('/api/jobs', jobsRouter);
+app.use('/api/projects', projectsRouter);
 app.use('/api/messages', messagesRouter);
 app.use('/api/proposals', proposalsRouter);
 app.use('/api/freelancers', freelancersRouter);

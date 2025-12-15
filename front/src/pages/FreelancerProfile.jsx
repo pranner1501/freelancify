@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getFreelancer, inviteFreelancer } from '../api/freelancers.js';
-import { listMyJobs } from '../api/jobs.js';
+import { listMyProjects } from '../api/projects.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
 function FreelancerProfile() {
@@ -14,10 +14,10 @@ function FreelancerProfile() {
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [error, setError] = useState(null);
 
-  const [myJobs, setMyJobs] = useState([]);
-  const [jobsLoading, setJobsLoading] = useState(false);
-  const [jobsError, setJobsError] = useState(null);
-  const [selectedJobId, setSelectedJobId] = useState('');
+  const [myProjects, setMyProjects] = useState([]);
+  const [projectsLoading, setProjectsLoading] = useState(false);
+  const [projectsError, setProjectsError] = useState(null);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
   const [inviting, setInviting] = useState(false);
   const [inviteError, setInviteError] = useState(null);
 
@@ -39,28 +39,28 @@ function FreelancerProfile() {
     loadProfile();
   }, [freelancerId, token]);
 
-  // Load "my jobs" for clients so they can invite
+  // Load "my projects" for clients so they can invite
   useEffect(() => {
-    async function loadJobs() {
+    async function loadProjects() {
       if (!user || user.role !== 'client') return;
 
-      setJobsLoading(true);
-      setJobsError(null);
+      setProjectsLoading(true);
+      setProjectsError(null);
       try {
-        const data = await listMyJobs(token);
-        setMyJobs(data);
+        const data = await listMyProjects(token);
+        setMyProjects(data);
         if (data.length > 0) {
-          setSelectedJobId(data[0].id);
+          setSelectedProjectId(data[0].id);
         }
       } catch (err) {
         console.error(err);
-        setJobsError('Failed to load your jobs.');
+        setProjectsError('Failed to load your projects.');
       } finally {
-        setJobsLoading(false);
+        setProjectsLoading(false);
       }
     }
 
-    loadJobs();
+    loadProjects();
   }, [user, token]);
 
   async function handleInvite(event) {
@@ -75,14 +75,14 @@ function FreelancerProfile() {
       setInviteError('Only clients can invite freelancers.');
       return;
     }
-    if (!selectedJobId) {
-      setInviteError('Please select a job to invite to.');
+    if (!selectedProjectId) {
+      setInviteError('Please select a project to invite to.');
       return;
     }
 
     try {
       setInviting(true);
-      const result = await inviteFreelancer(freelancerId, selectedJobId, token);
+      const result = await inviteFreelancer(freelancerId, selectedProjectId, token);
       navigate(`/messages/${result.threadId}`);
     } catch (err) {
       console.error(err);
@@ -126,10 +126,10 @@ function FreelancerProfile() {
           </p>
           <div className="profile-chips">
             <span className="chip">
-              {freelancer.stats.jobSuccess} job success
+              {freelancer.stats.projectSuccess} project success
             </span>
             <span className="chip">
-              {freelancer.stats.jobsCompleted} jobs completed
+              {freelancer.stats.projectsCompleted} projects completed
             </span>
             <span className="chip">
               {freelancer.stats.hoursWorked} hours worked
@@ -179,8 +179,8 @@ function FreelancerProfile() {
               <span>{freelancer.stats.memberSince}</span>
             </p>
             <p className="sidebar-row">
-              <span>Jobs completed</span>
-              <span>{freelancer.stats.jobsCompleted}</span>
+              <span>Projects completed</span>
+              <span>{freelancer.stats.projectsCompleted}</span>
             </p>
             <p className="sidebar-row">
               <span>Hours worked</span>
@@ -189,11 +189,11 @@ function FreelancerProfile() {
           </div>
 
           <div className="sidebar-card">
-            <h3>Invite to job</h3>
+            <h3>Invite to project</h3>
 
             {!user && (
               <p style={{ fontSize: '0.9rem' }}>
-                Log in as a client to invite this freelancer to a job.
+                Log in as a client to invite this freelancer to a project.
               </p>
             )}
 
@@ -205,31 +205,31 @@ function FreelancerProfile() {
 
             {user && user.role === 'client' && (
               <form onSubmit={handleInvite} className="auth-form">
-                {jobsLoading && <p>Loading your jobs...</p>}
-                {jobsError && (
+                {projectsLoading && <p>Loading your projects...</p>}
+                {projectsError && (
                   <p style={{ color: 'red', fontSize: '0.85rem' }}>
-                    {jobsError}
+                    {projectsError}
                   </p>
                 )}
 
-                {!jobsLoading && myJobs.length === 0 && !jobsError && (
+                {!projectsLoading && myProjects.length === 0 && !projectsError && (
                   <p style={{ fontSize: '0.85rem' }}>
-                    You have no jobs yet. <Link to="/jobs/new">Post a job</Link>{' '}
+                    You have no projects yet. <Link to="/projects/new">Post a project</Link>{' '}
                     first to invite freelancers.
                   </p>
                 )}
 
-                {!jobsLoading && myJobs.length > 0 && (
+                {!projectsLoading && myProjects.length > 0 && (
                   <>
                     <label className="form-field">
-                      <span>Select a job</span>
+                      <span>Select a project</span>
                       <select
-                        value={selectedJobId}
-                        onChange={(e) => setSelectedJobId(e.target.value)}
+                        value={selectedProjectId}
+                        onChange={(e) => setSelectedProjectId(e.target.value)}
                       >
-                        {myJobs.map((job) => (
-                          <option key={job.id} value={job.id}>
-                            {job.title}
+                        {myProjects.map((project) => (
+                          <option key={project.id} value={project.id}>
+                            {project.title}
                           </option>
                         ))}
                       </select>
@@ -246,7 +246,7 @@ function FreelancerProfile() {
                       className="btn btn-primary btn-full"
                       disabled={inviting}
                     >
-                      {inviting ? 'Sending invite...' : 'Invite to job'}
+                      {inviting ? 'Sending invite...' : 'Invite to project'}
                     </button>
                   </>
                 )}

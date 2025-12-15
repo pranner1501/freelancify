@@ -74,21 +74,21 @@ function ProposalDetails() {
             <section className="page">
                 <h1>Proposal not found</h1>
                 <p>{error || 'This proposal may have been removed.'}</p>
-                <Link to="/jobs" className="btn btn-primary">Back to projects</Link>
+                <Link to="/projects" className="btn btn-primary">Back to projects</Link>
             </section>
         );
     }
 
-    const jobStatus = proposal.job?.status || 'open';
-    const alreadyAwarded = proposal.status === 'accepted' || jobStatus !== 'open';
-    // Note: proposal.job.clientId may not be present in response. Backend only allowed owner to view, so UI will rely on role + available data.
+    const projectStatus = proposal.project?.status || 'open';
+    const alreadyAwarded = proposal.status === 'accepted' || projectStatus !== 'open';
+    // Note: proposal.project.clientId may not be present in response. Backend only allowed owner to view, so UI will rely on role + available data.
 
     return (
         <section className="page">
             <header className="page-header">
                 <h1>Proposal by {proposal.freelancer.name}</h1>
-                <p className="job-details-meta">
-                    {proposal.job.title} · {proposal.job.budget}
+                <p className="project-details-meta">
+                    {proposal.project.title} · {proposal.project.budget}
                 </p>
             </header>
 
@@ -147,7 +147,7 @@ function ProposalDetails() {
                     </div>
 
                     <div className="sidebar-backlink">
-                        <Link to={user.role === 'client'?`/jobs/${proposal.job.id}/manage`:'/jobs'} className="btn btn-ghost btn-full">
+                        <Link to={user.role === 'client'?`/projects/${proposal.project.id}/manage`:'/projects'} className="btn btn-ghost btn-full">
                             ← Back to proposals
                         </Link>
                     </div>

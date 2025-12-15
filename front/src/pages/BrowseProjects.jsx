@@ -1,12 +1,12 @@
-// src/pages/BrowseJobs.jsx
+// src/pages/BrowseProjects.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  listJobs,
-  listExploreJobs,
-  listMyJobs, 
-  listAssignedJobs,
-} from '../api/jobs.js';
+  listProjects,
+  listExploreProjects,
+  listMyProjects, 
+  listAssignedProjects,
+} from '../api/projects.js';
 import { listMyProposals } from '../api/proposals.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
@@ -40,7 +40,7 @@ function formatStatus(status) {
   }
 }
 
-function BrowseJobs() {
+function BrowseProjects() {
   const { user, token } = useAuth();
   const isClient = user && user.role === 'client';
   const isFreelancer = user && user.role === 'freelancer';
@@ -48,16 +48,16 @@ function BrowseJobs() {
   const [activeTab, setActiveTab] = useState('explore'); // 'explore' | 'my' | 'current' | 'proposals'
 
   // Explore / My (client) state
-  const [exploreJobs, setExploreJobs] = useState([]);
+  const [exploreProjects, setExploreProjects] = useState([]);
   const [exploreLoading, setExploreLoading] = useState(true);
   const [exploreError, setExploreError] = useState(null);
 
-  const [myJobs, setMyJobs] = useState([]);
+  const [myProjects, setMyProjects] = useState([]);
   const [myLoading, setMyLoading] = useState(false);
   const [myError, setMyError] = useState(null);
 
   // Freelancer-specific state
-  const [assignedJobs, setAssignedJobs] = useState([]);
+  const [assignedProjects, setAssignedProjects] = useState([]);
   const [assignedLoading, setAssignedLoading] = useState(false);
   const [assignedError, setAssignedError] = useState(null);
 
@@ -65,7 +65,7 @@ function BrowseJobs() {
   const [proposalsLoading, setProposalsLoading] = useState(false);
   const [proposalsError, setProposalsError] = useState(null);
 
-  // Load explore jobs
+  // Load explore projects
   useEffect(() => {
     async function loadExplore() {
       setExploreLoading(true);
@@ -73,11 +73,11 @@ function BrowseJobs() {
       try {
         let data;
         if (isClient) {
-          data = await listExploreJobs(token);
+          data = await listExploreProjects(token);
         } else {
-          data = await listJobs(token);
+          data = await listProjects(token);
         }
-        setExploreJobs(data);
+        setExploreProjects(data);
       } catch (err) {
         console.error(err);
         setExploreError('Failed to load projects.');
@@ -89,15 +89,15 @@ function BrowseJobs() {
     loadExplore();
   }, [isClient, token]);
 
-  // Load my jobs when client selects 'my' tab
+  // Load my projects when client selects 'my' tab
   useEffect(() => {
-    async function loadMyJobs() {
+    async function loadMyProjects() {
       if (!isClient || activeTab !== 'my') return;
       setMyLoading(true);
       setMyError(null);
       try {
-        const data = await listMyJobs(token);
-        setMyJobs(data);
+        const data = await listMyProjects(token);
+        setMyProjects(data);
       } catch (err) {
         console.error(err);
         setMyError('Failed to load your projects.');
@@ -105,18 +105,18 @@ function BrowseJobs() {
         setMyLoading(false);
       }
     }
-    loadMyJobs();
+    loadMyProjects();
   }, [isClient, activeTab, token]);
 
-  // Load assigned jobs for freelancer when 'current' selected
+  // Load assigned projects for freelancer when 'current' selected
   useEffect(() => {
     async function loadAssigned() {
       if (!isFreelancer || activeTab !== 'current') return;
       setAssignedLoading(true);
       setAssignedError(null);
       try {
-        const data = await listAssignedJobs(token);
-        setAssignedJobs(data);
+        const data = await listAssignedProjects(token);
+        setAssignedProjects(data);
       } catch (err) {
         console.error(err);
         setAssignedError('Failed to load your current projects.');
@@ -147,13 +147,13 @@ function BrowseJobs() {
   }, [isFreelancer, activeTab, token]);
 
   return (
-    <section className="page page-jobs">
+    <section className="page page-projects">
       <header className="page-header">
         <h1>Browse Projects</h1>
         <p>Find new work or manage your existing projects.</p>
       </header>
 
-      <div className="jobs-tabs">
+      <div className="projects-tabs">
         <button
           type="button"
           className={
@@ -183,7 +183,7 @@ function BrowseJobs() {
               }
               onClick={() => setActiveTab('current')}
             >
-              Current Jobs
+              Current Projects
             </button>
 
             <button
@@ -200,7 +200,7 @@ function BrowseJobs() {
       </div>
 
       {activeTab === 'explore' && (
-        <div className="jobs-layout">
+        <div className="projects-layout">
           <aside className="filter-panel">
             <h2>Filters</h2>
             <div className="filter-group">
@@ -208,7 +208,7 @@ function BrowseJobs() {
               <input type="text" placeholder="Search by keyword" />
             </div>
             <div className="filter-group">
-              <label>Job type</label>
+              <label>Project type</label>
               <select>
                 <option>Any</option>
                 <option>Hourly</option>
@@ -227,32 +227,32 @@ function BrowseJobs() {
             <button className="btn btn-primary btn-full">Apply filters</button>
           </aside>
 
-          <div className="jobs-list">
+          <div className="projects-list">
             {exploreLoading && <p>Loading projects...</p>}
             {exploreError && (
               <p style={{ color: 'red', fontSize: '0.9rem' }}>
                 {exploreError}
               </p>
             )}
-            {!exploreLoading && !exploreError && exploreJobs.length === 0 && (
+            {!exploreLoading && !exploreError && exploreProjects.length === 0 && (
               <p>No projects found.</p>
             )}
 
-            {exploreJobs.map((job) => (
-              <article key={job.id} className="job-card">
-                <h3>{job.title}</h3>
-                <p className="job-meta">
-                  {job.type} · {job.level} · {job.budget}
+            {exploreProjects.map((project) => (
+              <article key={project.id} className="project-card">
+                <h3>{project.title}</h3>
+                <p className="project-meta">
+                  {project.type} · {project.level} · {project.budget}
                 </p>
                 <div className="tags">
-                  {(job.tags || []).map((tag) => (
+                  {(project.tags || []).map((tag) => (
                     <span key={tag} className="tag">
                       {tag}
                     </span>
                   ))}
                 </div>
                 <Link
-                  to={`/jobs/${job.id}`}
+                  to={`/projects/${project.id}`}
                   className="btn btn-ghost-sm"
                 >
                   View details
@@ -264,51 +264,51 @@ function BrowseJobs() {
       )}
 
       {activeTab === 'my' && isClient && (
-        <div className="jobs-my">
+        <div className="projects-my">
           {myLoading && <p>Loading your projects...</p>}
           {myError && (
             <p style={{ color: 'red', fontSize: '0.9rem' }}>{myError}</p>
           )}
-          {!myLoading && !myError && myJobs.length === 0 && (
+          {!myLoading && !myError && myProjects.length === 0 && (
             <p>
               You haven&apos;t posted any projects yet.{' '}
-              <Link to="/jobs/new">Post a job</Link> to get started.
+              <Link to="/projects/new">Post a project</Link> to get started.
             </p>
           )}
 
-          <div className="jobs-list">
-            {myJobs.map((job) => (
-              <article key={job.id} className="job-card job-card-my">
-                <div className="job-header-row">
-                  <h3>{job.title}</h3>
+          <div className="projects-list">
+            {myProjects.map((project) => (
+              <article key={project.id} className="project-card project-card-my">
+                <div className="project-header-row">
+                  <h3>{project.title}</h3>
                   <span className="status-pill">
-                    {formatStatus(job.status)}
+                    {formatStatus(project.status)}
                   </span>
                 </div>
 
-                <p className="job-meta">
-                  {job.type} · {job.level} · {job.budget}
+                <p className="project-meta">
+                  {project.type} · {project.level} · {project.budget}
                 </p>
 
-                <div className="job-my-stats">
+                <div className="project-my-stats">
                   <span>
-                    Proposals: <strong>{job.proposalsCount}</strong>
+                    Proposals: <strong>{project.proposalsCount}</strong>
                   </span>
                   <span>
                     Time remaining:{' '}
-                    <strong>{formatTimeRemaining(job.deadline)}</strong>
+                    <strong>{formatTimeRemaining(project.deadline)}</strong>
                   </span>
                 </div>
 
-                <div className="job-my-actions">
+                <div className="project-my-actions">
                   <Link
-                    to={`/jobs/${job.id}/manage`}
+                    to={`/projects/${project.id}/manage`}
                     className="btn btn-ghost-sm"
                   >
                     Review proposals
                   </Link>
                   <Link
-                    to={`/jobs/${job.id}`}
+                    to={`/projects/${project.id}`}
                     className="btn btn-ghost-sm"
                   >
                     View public page
@@ -321,27 +321,27 @@ function BrowseJobs() {
       )}
 
       {activeTab === 'current' && isFreelancer && (
-        <div className="jobs-current">
+        <div className="projects-current">
           {assignedLoading && <p>Loading your current projects...</p>}
           {assignedError && (
             <p style={{ color: 'red', fontSize: '0.9rem' }}>{assignedError}</p>
           )}
 
-          {!assignedLoading && assignedJobs.length === 0 && (
+          {!assignedLoading && assignedProjects.length === 0 && (
             <p>You have no active projects right now.</p>
           )}
 
-          <div className="jobs-list">
-            {assignedJobs.map((a) => (
-              <article key={a.jobId || a.proposalId} className="job-card job-card-assigned">
-                <div className="job-header-row">
+          <div className="projects-list">
+            {assignedProjects.map((a) => (
+              <article key={a.projectId || a.proposalId} className="project-card project-card-assigned">
+                <div className="project-header-row">
                   <h3>{a.title}</h3>
                   <span className="status-pill">{formatStatus(a.status)}</span>
                 </div>
 
-                <p className="job-meta">{a.budget}</p>
+                <p className="project-meta">{a.budget}</p>
 
-                <div className="job-my-stats">
+                <div className="project-my-stats">
                   <span>
                     Awarded: <strong>{new Date(a.awardedAt).toLocaleDateString()}</strong>
                   </span>
@@ -350,9 +350,9 @@ function BrowseJobs() {
                   </span>
                 </div>
 
-                <div className="job-my-actions">
+                <div className="project-my-actions">
                   <Link
-                    to={`/jobs/${a.jobId}`}
+                    to={`/projects/${a.projectId}`}
                     className="btn btn-ghost-sm"
                   >
                     View public page
@@ -371,7 +371,7 @@ function BrowseJobs() {
       )}
 
       {activeTab === 'proposals' && isFreelancer && (
-        <div className="jobs-proposals">
+        <div className="projects-proposals">
           {proposalsLoading && <p>Loading your proposals...</p>}
           {proposalsError && (
             <p style={{ color: 'red', fontSize: '0.9rem' }}>{proposalsError}</p>
@@ -381,11 +381,11 @@ function BrowseJobs() {
             <p>You have not submitted any proposals yet.</p>
           )}
 
-          <div className="jobs-list">
+          <div className="projects-list">
             {myProposals.map((p) => (
               <article key={p.id} className="proposal-card">
                 <div className="proposal-header">
-                  <h3>{p.jobTitle || 'Job'}</h3>
+                  <h3>{p.projectTitle || 'Project'}</h3>
                   <span className="status-pill">{p.status}</span>
                 </div>
 
@@ -395,15 +395,15 @@ function BrowseJobs() {
 
                 <p className="proposal-cover">{p.coverLetter}</p>
 
-                <div className="job-my-actions">
+                <div className="project-my-actions">
                   <Link
-                    to={`/jobs/${p.jobId}`}
+                    to={`/projects/${p.projectId}`}
                     className="btn btn-ghost-sm"
                   >
-                    View job
+                    View project
                   </Link>
                   <Link
-                    to={`/jobs/${p.jobId}/proposals/${p.id}`}
+                    to={`/projects/${p.projectId}/proposals/${p.id}`}
                     className="btn btn-ghost-sm"
                   >
                     View proposal
@@ -418,4 +418,4 @@ function BrowseJobs() {
   );
 }
 
-export default BrowseJobs;
+export default BrowseProjects;

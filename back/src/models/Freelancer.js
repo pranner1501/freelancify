@@ -13,9 +13,9 @@ const ExperienceSchema = new mongoose.Schema(
 
 const StatsSchema = new mongoose.Schema(
   {
-    jobsCompleted: { type: Number, default: 0 },
+    projectsCompleted: { type: Number, default: 0 },
     hoursWorked: { type: Number, default: 0 },
-    jobSuccess: { type: Number, default: 0 }, // 0–100, will render with %
+    projectSuccess: { type: Number, default: 0 }, // 0–100, will render with %
     memberSince: { type: String, default: '' }, // e.g. "2018"
   },
   { _id: false }

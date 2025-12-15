@@ -10,9 +10,9 @@ export const freelancers = [
       'Full-stack developer with 6+ years of experience building SaaS products, admin dashboards, and REST APIs. I focus on clean, maintainable code and great UX.',
     skills: ['React', 'Node.js', 'MongoDB', 'TypeScript', 'Docker'],
     stats: {
-      jobsCompleted: 48,
+      projectsCompleted: 48,
       hoursWorked: 2100,
-      jobSuccess: '98%',
+      projectSuccess: '98%',
       memberSince: '2018',
     },
     experiences: [
@@ -42,9 +42,9 @@ export const freelancers = [
       'Product designer specializing in SaaS dashboards and mobile apps. I create flows and interfaces that feel intuitive and delightful.',
     skills: ['Figma', 'Prototyping', 'Design Systems', 'User Research'],
     stats: {
-      jobsCompleted: 32,
+      projectsCompleted: 32,
       hoursWorked: 1200,
-      jobSuccess: '95%',
+      projectSuccess: '95%',
       memberSince: '2019',
     },
     experiences: [
@@ -67,9 +67,9 @@ export const freelancers = [
       'Backend engineer with focus on Node.js microservices, PostgreSQL, and Redis. I care about performance and reliability.',
     skills: ['Node.js', 'PostgreSQL', 'Redis', 'Microservices', 'AWS'],
     stats: {
-      jobsCompleted: 41,
+      projectsCompleted: 41,
       hoursWorked: 1800,
-      jobSuccess: '99%',
+      projectSuccess: '99%',
       memberSince: '2017',
     },
     experiences: [

@@ -31,7 +31,7 @@ function Navbar() {
             Home
           </NavLink> */}
           <NavLink
-            to="/jobs"
+            to="/projects"
             className={({ isActive }) =>
               'nav-link' + (isActive ? ' nav-link-active' : '')
             }
@@ -58,8 +58,8 @@ function Navbar() {
 
         <div className="navbar-actions">
           {user && user.role === 'client' && (
-            <Link to="/jobs/new" className="btn btn-outline">
-              Post a job
+            <Link to="/projects/new" className="btn btn-outline">
+              Post a project
             </Link>
           )}
 

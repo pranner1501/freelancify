@@ -31,8 +31,8 @@ router.get('/threads', authRequired, async (req, res) => {
         id: t._id.toString(),
         participantName: t.participantName,
         participantRole: t.participantRole,
-        jobTitle: t.jobTitle,
-        jobId: t.job?.toString(),
+        projectTitle: t.projectTitle,
+        projectId: t.project?.toString(),
         lastActive: t.lastActive,
       }))
     );
@@ -58,7 +58,7 @@ router.get('/threads/:id', async (req, res) => {
       id: thread._id.toString(),
       participantName: thread.participantName,
       participantRole: thread.participantRole,
-      jobTitle: thread.jobTitle,
+      projectTitle: thread.projectTitle,
       messages: messages.map((m) => ({
         id: m._id.toString(),
         from: m.from,

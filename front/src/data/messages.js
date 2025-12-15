@@ -5,7 +5,7 @@ export const messageThreads = [
     id: '1',
     participantName: 'Alex Johnson',
     participantRole: 'Freelancer',
-    jobTitle: 'React frontend dev for dashboard',
+    projectTitle: 'React frontend dev for dashboard',
     lastActive: '2 hours ago',
     messages: [
       {
@@ -20,7 +20,7 @@ export const messageThreads = [
     id: '2',
     participantName: 'Sara Lee',
     participantRole: 'Freelancer',
-    jobTitle: 'Landing page design for SaaS product',
+    projectTitle: 'Landing page design for SaaS product',
     lastActive: 'Yesterday',
     messages: [
       {
@@ -59,7 +59,7 @@ export const messageThreads = [
     id: '4',
     participantName: 'Sara Lee',
     participantRole: 'Freelancer',
-    jobTitle: 'Landing page design for SaaS product',
+    projectTitle: 'Landing page design for SaaS product',
     lastActive: 'Yesterday',
     messages: [
       {
@@ -98,13 +98,13 @@ export const messageThreads = [
     id: '3',
     participantName: 'Sara Lee',
     participantRole: 'Freelancer',
-    jobTitle: 'Landing page design for SaaS product',
+    projectTitle: 'Landing page design for SaaS product',
     lastActive: 'Yesterday',
     messages: [
       {
         id: 'm1',
         from: 'them',
-        text: 'Hi, I saw your job about the React dashboard and would love to help.',
+        text: 'Hi, I saw your project about the React dashboard and would love to help.',
         time: '10:15',
       },
       {

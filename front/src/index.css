@@ -244,32 +244,32 @@ button {
   gap: 1rem;
 }
 
-/* Job cards */
-.job-card {
+/* Project cards */
+.project-card {
   background-color: #ffffff;
   border-radius: 0.9rem;
   padding: 1rem;
   border: 1px solid #e5e7eb;
 }
 
-.job-card h3 {
+.project-card h3 {
   margin: 0 0 0.4rem;
   font-size: 1rem;
 }
 
-.job-meta {
+.project-meta {
   font-size: 0.85rem;
   color: #6b7280;
   margin-bottom: 0.5rem;
 }
 
-.job-desc {
+.project-desc {
   font-size: 0.9rem;
   color: #4b5563;
   margin-bottom: 0.75rem;
 }
 
-.jobs-tabs {
+.projects-tabs {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
@@ -290,11 +290,11 @@ button {
   color: #ffffff;
 }
 
-.job-card-my {
+.project-card-my {
   border-left: 4px solid #2563eb;
 }
 
-.job-header-row {
+.project-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -308,7 +308,7 @@ button {
   color: #4f46e5;
 }
 
-.job-my-stats {
+.project-my-stats {
   display: flex;
   gap: 1.5rem;
   font-size: 0.85rem;
@@ -316,7 +316,7 @@ button {
   color: #4b5563;
 }
 
-.job-my-actions {
+.project-my-actions {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.4rem;
@@ -357,8 +357,8 @@ button {
   color: #6b7280;
 }
 
-/* Jobs page layout */
-.jobs-layout {
+/* Projects page layout */
+.projects-layout {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   gap: 1.5rem;
@@ -595,7 +595,7 @@ button {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .jobs-layout {
+  .projects-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -604,12 +604,12 @@ button {
   }
 }
 
-/* Job details */
-.job-details {
+/* Project details */
+.project-details {
   margin-top: 1.5rem;
 }
 
-.job-details-meta {
+.project-details-meta {
   margin: 0;
   color: #6b7280;
   font-size: 0.9rem;
@@ -897,7 +897,7 @@ display: grid;
   color: #9ca3af;
 }
 
-.conversation-job {
+.conversation-project {
   margin: 0.1rem 0;
   font-size: 0.8rem;
   color: #6b7280;
@@ -1082,7 +1082,7 @@ display: grid;
 .proposal-card:hover{
     background-color: #e2ebf2;
 }
-.job-card-assigned { border-left: 4px solid #10b981; }
+.project-card-assigned { border-left: 4px solid #10b981; }
 .proposal-header {
   display: flex;
   justify-content: space-between;

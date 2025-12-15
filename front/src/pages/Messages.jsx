@@ -217,7 +217,7 @@ function Messages() {
                           : ''}
                       </span>
                     </div>
-                    <p className="conversation-job">{t.jobTitle}</p>
+                    <p className="conversation-project">{t.projectTitle}</p>
                     <p className="conversation-preview">
                       {t.lastMessageText || ''}
                     </p>
@@ -247,11 +247,11 @@ function Messages() {
                 <div>
                   <h2>{activeThread.participantName}</h2>
                   <p className="message-header-meta">
-                    {activeThread.participantRole} · {activeThread.jobTitle}
+                    {activeThread.participantRole} · {activeThread.projectTitle}
                   </p>
                 </div>
-                <Link to="/jobs" className="btn btn-ghost-sm">
-                  View jobs
+                <Link to="/projects" className="btn btn-ghost-sm">
+                  View projects
                 </Link>
               </div>
 

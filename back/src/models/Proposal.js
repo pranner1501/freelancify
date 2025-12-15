@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const ProposalSchema = new mongoose.Schema(
   {
-    job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true },
+    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
 
     // NEW: actual freelancer user
     freelancer: {

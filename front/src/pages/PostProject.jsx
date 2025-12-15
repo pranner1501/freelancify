@@ -1,10 +1,10 @@
-// src/pages/PostJob.jsx
+// src/pages/PostProject.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createJob } from '../api/jobs.js';
+import { createProject } from '../api/projects.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
-function PostJob() {
+function PostProject() {
   const { token, user } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -39,11 +39,11 @@ function PostJob() {
           .filter(Boolean),
       };
 
-      await createJob(payload, token);
-      navigate('/jobs');
+      await createProject(payload, token);
+      navigate('/projects');
     } catch (err) {
       console.error(err);
-      setError('Failed to post job.');
+      setError('Failed to post project.');
     } finally {
       setSubmitting(false);
     }
@@ -52,8 +52,8 @@ function PostJob() {
   if (!user || user.role !== 'client') {
     return (
       <section className="page">
-        <h1>Post a job</h1>
-        <p>You must be logged in as a client to post jobs.</p>
+        <h1>Post a project</h1>
+        <p>You must be logged in as a client to post projects.</p>
       </section>
     );
   }
@@ -63,13 +63,13 @@ function PostJob() {
       <div className="form-layout">
         <div className="form-main">
           <header className="page-header">
-            <h1>Post a new job</h1>
+            <h1>Post a new project</h1>
             <p>Describe the work you want done and find the right freelancer.</p>
           </header>
 
           <form className="form-card" onSubmit={handleSubmit}>
             <label className="form-field">
-              <span>Job title</span>
+              <span>Project title</span>
               <input
                 type="text"
                 name="title"
@@ -81,7 +81,7 @@ function PostJob() {
             </label>
 
             <label className="form-field">
-              <span>Job description</span>
+              <span>Project description</span>
               <textarea
                 name="description"
                 rows="6"
@@ -171,14 +171,14 @@ function PostJob() {
               className="btn btn-primary btn-full"
               disabled={submitting}
             >
-              {submitting ? 'Posting...' : 'Post job'}
+              {submitting ? 'Posting...' : 'Post project'}
             </button>
           </form>
         </div>
 
         <aside className="form-sidebar">
           <div className="sidebar-card">
-            <h3>Good job posts include</h3>
+            <h3>Good project posts include</h3>
             <ul className="details-list">
               <li>Clear description of the outcome you want.</li>
               <li>Any tech stack or tools you require.</li>
@@ -191,4 +191,4 @@ function PostJob() {
   );
 }
 
-export default PostJob;
+export default PostProject;

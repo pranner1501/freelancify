@@ -1,14 +1,14 @@
-// src/pages/JobProposals.jsx
+// src/pages/ProjectProposals.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getJobProposals, getJobDetails } from '../api/jobs.js';
+import { getProjectProposals, getProjectDetails } from '../api/projects.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
-function JobProposals() {
-  const { jobId } = useParams();
+function ProjectProposals() {
+  const { projectId } = useParams();
   const { user, token } = useAuth();
 
-  const [job, setJob] = useState(null);
+  const [project, setProject] = useState(null);
   const [proposals, setProposals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,13 +24,13 @@ function JobProposals() {
       setError(null);
 
       try{
-        // Load job details (for header) and proposals
-        const [jobDetails, proposalsData] = await Promise.all([
-          getJobDetails(jobId, token),
-          getJobProposals(jobId, token),
+        // Load project details (for header) and proposals
+        const [projectDetails, proposalsData] = await Promise.all([
+          getProjectDetails(projectId, token),
+          getProjectProposals(projectId, token),
         ]);
 
-        setJob(jobDetails);
+        setProject(projectDetails);
         setProposals(proposalsData.proposals || []);
       } catch (err) {
         console.error(err);
@@ -41,7 +41,7 @@ function JobProposals() {
     }
 
     load();
-  }, [jobId, token, user]);
+  }, [projectId, token, user]);
 
   if (!user) {
     return (
@@ -60,7 +60,7 @@ function JobProposals() {
       <section className="page">
         <h1>Project proposals</h1>
         <p>Only client accounts can view proposals for their projects.</p>
-        <Link to="/jobs" className="btn btn-primary">
+        <Link to="/projects" className="btn btn-primary">
           Back to projects
         </Link>
       </section>
@@ -80,18 +80,18 @@ function JobProposals() {
       <section className="page">
         <h1>Project proposals</h1>
         <p style={{ color: 'red', fontSize: '0.9rem' }}>{error}</p>
-        <Link to="/jobs" className="btn btn-primary">
+        <Link to="/projects" className="btn btn-primary">
           Back to projects
         </Link>
       </section>
     );
   }
 
-  if (!job) {
+  if (!project) {
     return (
       <section className="page">
         <h1>Project not found</h1>
-        <Link to="/jobs" className="btn btn-primary">
+        <Link to="/projects" className="btn btn-primary">
           Back to projects
         </Link>
       </section>
@@ -101,9 +101,9 @@ function JobProposals() {
   return (
     <section className="page">
       <header className="page-header">
-        <h1>Proposals for: {job.title}</h1>
-        <p className="job-details-meta">
-          {job.type} · {job.level} · {job.budget}
+        <h1>Proposals for: {project.title}</h1>
+        <p className="project-details-meta">
+          {project.type} · {project.level} · {project.budget}
         </p>
       </header>
 
@@ -113,7 +113,7 @@ function JobProposals() {
 
       <div className="proposals-list">
         {proposals.map((p) => (
-            <Link to={`/jobs/${job.id}/proposals/${p.id}`} >
+            <Link to={`/projects/${project.id}/proposals/${p.id}`} >
             <article key={p.id} className="proposal-card">
             <div className="proposal-header">
               <h3>{p.freelancerName}</h3>
@@ -132,7 +132,7 @@ function JobProposals() {
       </div>
 
       <div style={{ marginTop: '1rem' }}>
-        <Link to="/jobs" className="btn btn-ghost">
+        <Link to="/projects" className="btn btn-ghost">
           ← Back to projects
         </Link>
       </div>
@@ -140,4 +140,4 @@ function JobProposals() {
   );
 }
 
-export default JobProposals;
+export default ProjectProposals;

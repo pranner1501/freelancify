@@ -14,12 +14,12 @@ const MessageThreadSchema = new mongoose.Schema(
     // For current UI:
     participantName: { type: String, required: true },
     participantRole: { type: String, default: 'Freelancer' },
-    jobTitle: { type: String, required: true },
+    projectTitle: { type: String, required: true },
 
-    // Link to a specific job (optional but helpful)
-    job: {
+    // Link to a specific project (optional but helpful)
+    project: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Job',
+      ref: 'Project',
     },
 
     lastActive: { type: Date, default: Date.now },
