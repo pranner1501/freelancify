@@ -3,9 +3,14 @@
 </h2>
 
 <h3><b>
-  Just clone this repo and start testing. 🧑‍💻💻<br>
+  Just clone this repo, follow these steps and start testing.🧑‍💻💻<br>
 </b></h3>
 <li><b>First cloning the repo</b></li>
+<li><b>Create a .env file in back/ directory having the following content</b></li>
+  <ul><li>PORT=4000<br>
+MONGODB_URI=replace_with_your_mongodb-atlas_connection_string<br>
+CLIENT_ORIGIN=http://localhost:5173<br>
+JWT_SECRET=myjwtsecret<br></li></ul>
 <li><b>then run these following commands</b></li>
 <ol>
   <li><b>cd back</b> (change to back dir)</li>
