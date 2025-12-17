@@ -94,6 +94,7 @@ function Signup() {
             >
               <option value="freelancer">Freelancer</option>
               <option value="client">Client</option>
+              <option value="freelancer">Full Timer</option>
             </select>
           </label>
 

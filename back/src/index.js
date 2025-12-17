@@ -11,8 +11,11 @@ import messagesRouter from './routes/messages.js';
 import authRouter from './routes/auth.js';
 import freelancersRouter from './routes/freelancers.js';
 import proposalsRouter from './routes/proposals.js';
+import jobsRouter from './routes/jobs.js';
+import jobSerachRouter from './routes/jobSearch.js';
+import jobApplicationRouter from './routes/jobApplications.js';
 
-import debugRouter from './routes/debug.js';
+// import debugRouter from './routes/debug.js';
 
 import { Message } from './models/Message.js';
 import { MessageThread } from './models/MessageThread.js';
@@ -40,7 +43,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.use('/api/debug', debugRouter);
+// app.use('/api/debug', debugRouter);
 
 app.use('/api/auth', authRouter);
 
@@ -48,6 +51,9 @@ app.use('/api/projects', projectsRouter);
 app.use('/api/messages', messagesRouter);
 app.use('/api/proposals', proposalsRouter);
 app.use('/api/freelancers', freelancersRouter);
+app.use('/api/jobs',jobSerachRouter);
+app.use('/api/jobs', jobsRouter);
+app.use('/api/job-applications', jobApplicationRouter);
 
 // Socket.io events
 io.on('connection', (socket) => {

@@ -111,7 +111,7 @@ button {
 
 /* Buttons */
 .btn {
-  display: inline-flex;
+  display:inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
@@ -172,7 +172,10 @@ button {
 }
 
 .btn-full {
-  width: 100%;
+  width: 200px;
+  align-items: center;
+  justify-items: center;
+  margin-top: 10px;
 }
 
 /* Hero / Home */
@@ -253,7 +256,7 @@ button {
 }
 
 .project-card h3 {
-  margin: 0 0 0.4rem;
+  margin: 0 0 rem;
   font-size: 1rem;
 }
 
@@ -673,7 +676,7 @@ button {
 }
 
 .sidebar-card h3 {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.1rem;
   font-size: 0.95rem;
 }
 
@@ -1110,3 +1113,28 @@ display: grid;
   font-size: 0.9rem;
   margin: 0.4rem 0 0;
 }
+
+.application-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.application-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-pill {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+
+.status-applied { background: #e5e7eb; }
+.status-shortlisted { background: #fde68a; }
+.status-hired { background: #bbf7d0; }
+.status-rejected { background: #fecaca; }

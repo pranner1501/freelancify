@@ -59,7 +59,7 @@ function PostProject() {
   }
 
   return (
-    <section className="page page-form">
+    <section className="page app-main">
       <div className="form-layout">
         <div className="form-main">
           <header className="page-header">
