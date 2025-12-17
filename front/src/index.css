@@ -251,12 +251,13 @@ button {
 .project-card {
   background-color: #ffffff;
   border-radius: 0.9rem;
-  padding: 1rem;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
   border: 1px solid #e5e7eb;
 }
 
 .project-card h3 {
-  margin: 0 0 rem;
+  margin: 0 0rem;
   font-size: 1rem;
 }
 

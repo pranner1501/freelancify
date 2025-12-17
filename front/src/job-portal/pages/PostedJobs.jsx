@@ -102,7 +102,7 @@ function PostedJobs() {
 
       <div className="jobs-list">
         {jobs.map((job) => (
-          <article key={job.id} className="application-card">
+          <article key={job.id} className="project-card">
             <h3>{job.title}</h3>
 
             <p className="job-meta">
