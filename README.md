@@ -11,6 +11,12 @@
 MONGODB_URI=replace_with_your_mongodb-atlas_connection_string<br>
 CLIENT_ORIGIN=http://localhost:5173<br>
 JWT_SECRET=myjwtsecret<br></li></ul>
+<li><b>Similarly create a .env file in front/ directory having the following content</b></li>
+<ul><li>
+VITE_CLOUDINARY_CLOUD_NAME=dgk....<br>
+VITE_CLOUDINARY_UPLOAD_PRESET=your_upload preset(in settings, allow pdf delivery)<br>
+VITE_API_BASE_URL=http://localhost:4000</li></ul>
+
 <li><b>then run these following commands</b></li>
 <ol>
   <li><b>cd back</b> (change to back dir)</li>
